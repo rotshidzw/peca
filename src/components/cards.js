@@ -8,7 +8,7 @@ const NewsCards = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       const response = await axios.get(
-        'https://newsapi.org/v2/top-headlines?country=us&category=gaming&apiKey=798e568c8f0844d480d811eab603dbba'
+        'https://newsapi.org/v2/everything?q=tesla&from=2023-02-12&sortBy=publishedAt&apiKey=798e568c8f0844d480d811eab603dbba'
       );
       setArticles(response.data.articles.slice(0, 2));
     };

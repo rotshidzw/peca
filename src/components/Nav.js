@@ -56,7 +56,7 @@ const Nav = () => {
 
           </div>
         </div>
-         <button class="bg-gray-800 shadow-xl hover:bg-black hidden rounded-lg lg:block text-white font-bold py-3 px-8 ">
+         <button className="bg-gray-800 shadow-xl hover:bg-black hidden rounded-lg lg:block text-white font-bold py-3 px-8 ">
         Contact Us
 </button>
         <div className="-mr-2 flex md:hidden">
