@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
@@ -7,22 +7,11 @@ const NewsCards = () => {
 
   useEffect(() => {
     const fetchArticles = async () => {
-      try {
-        const response = await axios.get(
-          'https://newsapi.org/v2/top-headlines',
-          {
-            params: {
-              country: 'us',
-              apiKey: '798e568c8f0844d480d811eab603dbba'
-            }
-          }
-        );
-        setArticles(response.data.articles.slice(0, 2));
-      } catch (error) {
-        console.error(error);
-      }
+      const response = await axios.get(
+        'https://newsapi.org/v2/everything?q=keyword&apiKey=798e568c8f0844d480d811eab603dbba'
+      );
+      setArticles(response.data.articles.slice(0, 2));
     };
-    
     fetchArticles();
   }, []);
 
@@ -33,7 +22,7 @@ const NewsCards = () => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-20">
       {articles.map((article) => (
-        <motion.div
+        <div
           key={article.url}
           className="bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer"
           style={{ height: '480px' }}
@@ -56,7 +45,7 @@ const NewsCards = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       ))}
     </div>
   );
