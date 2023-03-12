@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
@@ -7,6 +7,7 @@ const NewsCards = () => {
 
   useEffect(() => {
     const fetchArticles = async () => {
+      try {
         const response = await axios.get(
           'https://newsapi.org/v2/top-headlines',
           {
@@ -17,8 +18,11 @@ const NewsCards = () => {
           }
         );
         setArticles(response.data.articles.slice(0, 2));
-      };
-      
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
     fetchArticles();
   }, []);
 
@@ -29,7 +33,7 @@ const NewsCards = () => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-20">
       {articles.map((article) => (
-        <div
+        <motion.div
           key={article.url}
           className="bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer"
           style={{ height: '480px' }}
@@ -52,7 +56,7 @@ const NewsCards = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
