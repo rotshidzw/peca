@@ -4,7 +4,8 @@ import Herosection from './components/HeroSection';
 import Cards from './components/cards';
 import Popular from './components/popular';
 import Trending from './components/trending';
-import Footer from './components/footer'
+import Footer from './components/footer';
+
 function App() {
   return (
     <div className="App">
@@ -13,6 +14,7 @@ function App() {
     <Cards />
     <Popular />
     <Trending />
+    
     <Footer />
     </div>
   );

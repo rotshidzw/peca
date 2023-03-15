@@ -2,12 +2,70 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
+import "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD8r87GlgZZ33PO2Fu_cDP-Tb6VtIGMHG4",
+  authDomain: "deft-epoch-379213.firebaseapp.com",
+  projectId: "deft-epoch-379213",
+  storageBucket: "deft-epoch-379213.appspot.com",
+  messagingSenderId: "18023085670",
+  appId: "1:18023085670:web:967b368b4e9bc80f8a5fa7",
+  measurementId: "G-ZSB9NMLQZJ"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
 
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+ 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    try {
+      await db.collection("myCollection").add({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      });
+  
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
+      });
+  
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Error submitting form!");
+    }
+  };
+  
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
+  const handleClose = () => {
+    setShowForm(false);
+  };
   return (
 
     <nav className="bg-white">
@@ -56,9 +114,71 @@ const Nav = () => {
 
           </div>
         </div>
-         <button className="bg-gray-800 shadow-xl hover:bg-black hidden rounded-lg lg:block text-white font-bold py-3 px-8 ">
+        <div>
+      <button
+        className="bg-gray-800 shadow-xl hidden hover:bg-black rounded-lg lg:block text-white font-bold py-3 px-8"
+        onClick={() => setShowForm(true)}
+      >
         Contact Us
-</button>
+      </button>
+      {showForm && (
+        <div className="fixed z-50 inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg  md:px-32">
+          <h2 className="text-xl font-bold mb-4">Sign In</h2>
+          <div className="mb-4">
+            <label className="block text-left text-gray-700 font-bold mb-2" htmlFor="name">
+              Name
+            </label>
+            <input
+              className="border rounded w-full py-2 px-3 text-gray-700"
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-left text-gray-700 font-bold mb-2" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="border rounded w-full py-2 px-3 text-gray-700"
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-left text-gray-700 font-bold mb-2" htmlFor="message">
+              Message
+            </label>
+            <textarea
+              className="border rounded w-full py-2 md:px-20 px-6 text-gray-700"
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex justify-center">
+            <button
+              className="bg-gray-900 hover:bg-black text-white py-3 px-10 rounded"
+              type="submit"
+            >
+              Sign In
+            </button>
+          </div>
+          <button className="absolute top-0 right-0 m-4 text-2xl bg-gray-900 text-white py-2 px-4 rounded" onClick={handleClose}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </form>
+          
+        </div>
+      )}
+    </div>
         <div className="-mr-2 flex md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}

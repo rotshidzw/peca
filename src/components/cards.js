@@ -8,21 +8,9 @@ const NewsCards = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       const response = await axios.get(
-        'https://api.newscatcherapi.com/v2/search',
-        {
-          params: {
-            q: 'keyword',
-            lang: 'en',
-            sort_by: 'relevancy',
-            page: 1,
-            page_size: 2
-          },
-          headers: {
-            'x-api-key': 'ifz5ahm7KX9sUBSQPAWNHa05L4KhXLHBmiVMZsA9ONI'
-          }
-        }
+        'https://gnews.io/api/v4/top-headlines?country=za&token=59c423d844791b0318277eddcc6ee045'
       );
-      setArticles(response.data.articles);
+      setArticles(response.data.articles.slice(0, 2));
     };
     fetchArticles();
   }, []);
@@ -43,7 +31,7 @@ const NewsCards = () => {
           onClick={() => handleArticleClick(article.link)}
         >
           <motion.img
-            src={article.media}
+            src={article.image}
             alt={article.title}
             className="w-full h-2/3 object-cover"
             style={{ height: '320px' }}
@@ -53,7 +41,7 @@ const NewsCards = () => {
             <h2 className="font-bold text-xl mb-2">{article.title}</h2>
             <div className="flex items-center mt-4">
               <div className="text-sm">
-                <p className="text-gray-900 leading-none font-bold hover:text-slate-900">{article.author} {new Date(article.published_date).toLocaleDateString()}</p>
+                <p className="text-gray-900 leading-none font-bold hover:text-slate-900">{article.source.name}&nbsp;&nbsp;{new Date(article.publishedAt).toLocaleDateString()}</p>
               </div>
             </div>
           </div>
