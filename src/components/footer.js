@@ -5,7 +5,8 @@ import { faFacebookSquare, faTwitter, faInstagram, faGitSquare  } from "@fortawe
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 pt-10 pb-8">
+   
+   <footer className="bg-gray-900 pt-10 pb-8">
     <div className="container mx-auto px-4">
       <div className="flex flex-wrap">
         <div className="w-full lg:w-6/12 px-4">

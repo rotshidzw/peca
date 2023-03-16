@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+import { Link } from 'react-router-dom';
 
 import "firebase/firestore";
 
@@ -83,31 +84,30 @@ const Nav = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-36 flex text-center space-x-12">
-              <a href="#"
+              
+              <Link  to="/"
                 className="  text-black px-3 py-2  hover:underline text-xl font-medium"
               >
                 Home
-              </a>
+              </Link>
 
-              <a href="#"
-                className="text-black  hover:underline px-3 py-2  text-xl font-medium"
-              >
-                Blog
-              </a>
+              <Link to="/blog" className="text-black hover:underline px-3 py-2 text-xl font-medium">
+              Blog
+             </Link>
 
-              <a href="#"
+              <Link to="/about"
                 className="text-black  hover:underline px-3 py-2  text-xl font-medium"
               >
                 About
-              </a>
-             <div className="relative">
-               <button
+              </Link>
+            
+              <Link to="/contact"
         className="block px-4 py-2 text-black font-semibold hover:underline text-xl   focus:outline-none"
       >
         Contact
-      </button>
+      </Link>
     
-         </div>
+         
              
             </div>
            

@@ -1,22 +1,25 @@
 import './App.css';
-import Nav from '../src/components/Nav';
 import Herosection from './components/HeroSection';
 import Cards from './components/cards';
 import Popular from './components/popular';
 import Trending from './components/trending';
-import Footer from './components/footer';
+import Layout from './components/layout';
+
 
 function App() {
   return (
-    <div className="App">
-    <Nav />
-    <Herosection />
+  <Layout >
+   <div className="App">
+  
+ 
+   <Herosection />
     <Cards />
     <Popular />
     <Trending />
     
-    <Footer />
+  
     </div>
+ </Layout>
   );
 }
 

@@ -49,7 +49,8 @@ const App = () => {
        It is a long established fact that a reader will be distracted.
      </p>
      <div className="flex flex-col md:flex-row justify-center items-center">
-     <form className="search relative justify-center items-center" action="/search">
+     <form className="search relative justify-center items-center"action="https://getform.io/f/8f58c1a7-a3d4-4ea6-8a36-96c8a17f75fb"
+        method="POST">
       <input
         className="field-input search-input w-input block rounded-lg bg-transparent border text-lg text-black  border-gray-300 shadow-sm placeholder-gray-400 py-2 px-8 md:py-5  md:px-48 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
         type="email"
