@@ -246,29 +246,29 @@ const Nav = () => {
       ref={ref}
     >
       <div className="px-2  text-left pt-2 pb-3 space-y-0 lg:px-3">
-        <a href="#"
+        <Link  to="/"
           className="text-black block hover:underline px-3 py-2  text-xl font-medium"
         >
           Home
-        </a>
+        </Link>
 
-        <a href="#"
+        <Link to="/blog"
           className="text-black  hover:underline block px-3 py-2  text-xl font-medium"
         >
           Blog
-        </a>
+        </Link>
 
-        <a href="#"
+        <Link to="/about"
           className="text-black  hover:underline block px-3 py-2  text-xl font-medium"
         >
          About
-        </a>
+        </Link>
 
-        <a href="#"
+        <Link to="/contact"
           className="text-black  hover:underline block px-3 py-2  text-xl font-medium"
         > Contact
         
-        </a>
+        </Link>
       </div>
     </motion.div>
   )}
