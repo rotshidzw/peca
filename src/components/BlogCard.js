@@ -21,7 +21,7 @@ const SpaceflightNews = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('https://api.spaceflightnewsapi.net/v3/articles?_limit=12')
+    axios.get('https://api.spaceflightnewsapi.net/v3/articles?_limit=50')
       .then(response => {
         setNews(response.data);
       })
@@ -31,27 +31,25 @@ const SpaceflightNews = () => {
   }, []);
  
   return (
-    <div className="bg-gray-200 mx-auto">
+    <div className="bg-white py-4 mx-auto">
     
-      <div className="container mx-auto my-4 md:py-20"> 
-       <h1 className="text-3xl md:text-center py-16 md:text-4xl font-bold ">NASA Videos</h1>
-        <div className="relative h-96 border  mb-8">
+      <div className="container mx-auto my-2 md:py-4">
+        <div className="relative py-[280px] border rounded-md  mb-8">
           {videos.length > 0 &&
             // eslint-disable-next-line
             <iframe 
               src={`https://www.youtube.com/embed/${videos[0].id.videoId}`}
-              className="absolute top-0 left-0 w-full h-full  border"
-              frameBorder="0"
+              className="absolute top-0 left-0 w-full h-full rounded-md border"
+             
               allowFullScreen
             />
           }
-        </div>  
-        <h1 className="text-3xl text-left md:text-4xl font-bold mb-2">Spaceflight News</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  my-8 ">
+        </div> 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  my-16">
           {news.map(article => (
             <motion.div 
               key={article.id} 
-              className="border bg-white border-gray-400 p-4 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out"
+              className=" bg-white border-gray-400 p-4 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out"
               whileHover={{ y: -10 }}
               whileTap={{ scale: 0.95 }}
             >
