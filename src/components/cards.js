@@ -10,7 +10,7 @@ const NewsCards = () => {
       const response = await axios.get(
         'https://gnews.io/api/v4/top-headlines?country=za&token=59c423d844791b0318277eddcc6ee045'
       );
-      setArticles(response.data.articles.slice(0, 2));
+      setArticles(response.data.articles.slice(0, 4));
     };
     fetchArticles();
   }, []);
