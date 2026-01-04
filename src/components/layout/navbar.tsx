@@ -40,6 +40,9 @@ export function Navbar() {
               {item.name}
             </Link>
           ))}
+          <Button variant="outline" asChild>
+            <Link href="/auth/sign-in">Sign in</Link>
+          </Button>
         </nav>
         <div className="flex items-center gap-2">
           <ThemeToggle />
@@ -64,6 +67,13 @@ export function Navbar() {
                 {item.name}
               </Link>
             ))}
+            <Link
+              href="/auth/sign-in"
+              className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+              onClick={() => setOpen(false)}
+            >
+              Sign in
+            </Link>
           </div>
         </div>
       ) : null}

@@ -25,6 +25,7 @@ A production-ready fullstack newsroom and travel publishing platform built with 
 - NextAuth
 - UploadThing (image uploads)
 - Vitest + Testing Library
+- NewsAPI (external travel/culture feed)
 
 ## Local Setup
 
@@ -38,6 +39,8 @@ Create a `.env` file from the template:
 ```bash
 cp .env.example .env
 ```
+
+Set `NEWS_API_KEY` to pull external headlines (optional). If omitted, the UI falls back to seeded posts.
 
 ### 3) Start PostgreSQL (Docker)
 ```bash

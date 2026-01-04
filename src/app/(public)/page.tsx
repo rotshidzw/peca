@@ -2,16 +2,51 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { NewsletterForm } from '@/components/forms/newsletter-form';
+import { NewsCard } from '@/components/post/news-card';
 import { PostCard } from '@/components/post/post-card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { getHomeData, getTrendingPosts } from '@/lib/data';
 
+interface NewsItem {
+  title: string;
+  excerpt: string;
+  url: string;
+  image: string | null;
+  publishedAt: string;
+  source: string;
+}
+
 export const dynamic = 'force-dynamic';
 
+async function getNewsItems(): Promise<NewsItem[]> {
+  const baseUrl = process.env.NEXTAUTH_URL ?? 'http://localhost:3000';
+  const response = await fetch(`${baseUrl}/api/news`, { cache: 'no-store' });
+  if (!response.ok) {
+    return [];
+  }
+  const data = (await response.json()) as { items: NewsItem[] };
+  return data.items;
+}
+
 export default async function HomePage() {
-  const [homeData, trendingPosts] = await Promise.all([getHomeData(), getTrendingPosts()]);
+  const [homeData, trendingPosts, newsItems] = await Promise.all([
+    getHomeData(),
+    getTrendingPosts(),
+    getNewsItems()
+  ]);
+
+  const fallbackNews: NewsItem[] = homeData.latestPosts.map((post) => ({
+    title: post.title,
+    excerpt: post.excerpt,
+    url: `/post/${post.slug}`,
+    image: post.coverImage,
+    publishedAt: post.publishedAt?.toISOString() ?? new Date().toISOString(),
+    source: post.category.name
+  }));
+
+  const coverageItems = newsItems.length > 0 ? newsItems : fallbackNews;
 
   return (
     <div>
@@ -76,8 +111,8 @@ export default async function HomePage() {
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold">Latest coverage</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            {homeData.latestPosts.map((post) => (
-              <PostCard key={post.id} post={post} />
+            {coverageItems.slice(0, 6).map((item) => (
+              <NewsCard key={item.url} item={item} />
             ))}
           </div>
         </div>
