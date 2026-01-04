@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { PostViewTracker } from '@/components/post/post-view-tracker';
 import { ShareActions } from '@/components/post/share-actions';
 import { getPostBySlug } from '@/lib/data';
