@@ -26,11 +26,11 @@ export default async function DashboardPage() {
   ]);
 
   return (
-    <div className="container space-y-6 py-16">
-      <div>
-        <h1 className="text-3xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Overview of newsroom performance and community engagement.
+    <div className="space-y-6">
+      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h1 className="text-3xl font-semibold">Dashboard overview</h1>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          Track editorial velocity, subscriber growth, and community activity in one place.
         </p>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -65,6 +65,9 @@ export default async function DashboardPage() {
         </Button>
         <Button asChild variant="outline">
           <a href="/profile">View profile</a>
+        </Button>
+        <Button asChild>
+          <a href="/dashboard/posts">Review posts</a>
         </Button>
       </div>
     </div>

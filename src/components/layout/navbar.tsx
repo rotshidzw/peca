@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ const navigation = [
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
@@ -40,9 +42,20 @@ export function Navbar() {
               {item.name}
             </Link>
           ))}
-          <Button variant="outline" asChild>
-            <Link href="/auth/sign-in">Sign in</Link>
-          </Button>
+          {session ? (
+            <>
+              <Button variant="outline" asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+              <Button variant="ghost" onClick={() => signOut({ callbackUrl: '/' })}>
+                Sign out
+              </Button>
+            </>
+          ) : (
+            <Button variant="outline" asChild>
+              <Link href="/auth/sign-in">Sign in</Link>
+            </Button>
+          )}
         </nav>
         <div className="flex items-center gap-2">
           <ThemeToggle />
@@ -67,13 +80,32 @@ export function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="/auth/sign-in"
-              className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-              onClick={() => setOpen(false)}
-            >
-              Sign in
-            </Link>
+            {session ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                  onClick={() => setOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  type="button"
+                  className="text-left text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/auth/sign-in"
+                className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                onClick={() => setOpen(false)}
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       ) : null}
