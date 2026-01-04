@@ -14,7 +14,7 @@ export default async function DashboardPage() {
   if (!session) {
     redirect('/auth/sign-in');
   }
-  if (!hasRole(session.user?.role, 'EDITOR')) {
+  if (!hasRole(session.user?.role, 'READER')) {
     redirect('/');
   }
 
@@ -57,6 +57,34 @@ export default async function DashboardPage() {
             <CardTitle>Contacts</CardTitle>
           </CardHeader>
           <CardContent className="text-2xl font-semibold">{contacts}</CardContent>
+        </Card>
+      </div>
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>Role insights</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-slate-600 dark:text-slate-400">
+            Your role is <span className="font-semibold">{session.user?.role}</span>. Access the
+            sidebar to explore tools tailored to your permissions.
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Reader benefits</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-slate-600 dark:text-slate-400">
+            Bookmark editorial insights, monitor newsletter status, and track the latest
+            newsroom coverage.
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Editor & admin</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-slate-600 dark:text-slate-400">
+            Editors manage content pipelines, while admins oversee user access and system health.
+          </CardContent>
         </Card>
       </div>
       <div className="flex flex-wrap gap-3">
