@@ -1,73 +1,103 @@
-# Getting Started with Create React App
+# Peca Journal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-https://www.loom.com/share/83c6cf64623045d789f6ecf724ecb490
+A production-ready fullstack newsroom and travel publishing platform built with Next.js App Router, Prisma, and PostgreSQL. It includes authentication, role-based access control, analytics, SEO tooling, and a polished editorial UI.
 
-![image](https://user-images.githubusercontent.com/69056906/226124010-b79b0763-8c33-4776-b70a-53f65d80a1ae.png)
+## Features
+- Next.js App Router + TypeScript + Tailwind + shadcn/ui
+- Auth with NextAuth + RBAC roles (ADMIN, EDITOR, READER)
+- Prisma ORM + PostgreSQL (Neon/Supabase compatible)
+- Editorial publishing workflow with categories, tags, and post status
+- Post views analytics with daily aggregation
+- Newsletter subscriptions with unsubscribe tokens
+- Contact submissions moderation pipeline
+- SEO: dynamic metadata, RSS, sitemap, robots
+- Dark mode with persisted preference
+- Search with debounced queries and highlighting
+- Rate limiting on public write endpoints
+- Docker Compose for local Postgres
 
-## Available Scripts
+## Tech Stack
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS + shadcn/ui
+- Prisma ORM
+- PostgreSQL
+- NextAuth
+- UploadThing (image uploads)
+- Vitest + Testing Library
+- NewsAPI (external travel/culture feed)
 
-In the project directory, you can run:
+## Local Setup
 
-### `npm start`
+### 1) Install dependencies
+```bash
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2) Configure environment
+Create a `.env` file from the template:
+```bash
+cp .env.example .env
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Set `NEWS_API_KEY` to pull external headlines (optional). If omitted, the UI falls back to seeded posts.
 
-### `npm test`
+### 3) Start PostgreSQL (Docker)
+```bash
+docker compose up -d
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 4) Apply migrations + seed
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
 
-### `npm run build`
+### 5) Run the app
+```bash
+npm run dev
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Database
+- Local development uses Docker Postgres with `DATABASE_URL=postgresql://postgres:postgres@localhost:5432/peca`.
+- Production should point `DATABASE_URL` to Neon or Supabase.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Docker (DB only)
+```bash
+docker compose up -d
+npx prisma migrate dev
+npx prisma db seed
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Prisma Commands
+```bash
+npx prisma migrate dev
+npx prisma generate
+npx prisma db seed
+```
 
-### `npm run eject`
+## Demo Credentials
+- Admin: `admin@peca.dev` / `password123`
+- Editor: `editor@peca.dev` / `password123`
+- Reader: `reader@peca.dev` / `password123`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Deployment (Vercel + Neon/Supabase)
+1. Create a Postgres database on Neon or Supabase.
+2. Set `DATABASE_URL` and `NEXTAUTH_SECRET` in Vercel.
+3. Set UploadThing env vars (`UPLOADTHING_SECRET`, `UPLOADTHING_APP_ID`).
+4. Deploy via Vercel.
+5. Run `npx prisma migrate deploy` during build or via Vercel build command.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Scripts
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+npm run typecheck
+npm run test
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Notes
+- Security headers are configured in `next.config.mjs`.
+- Rate limiting is implemented for newsletter and contact routes.
