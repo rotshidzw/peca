@@ -2,6 +2,8 @@ import { Feed } from 'feed';
 
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const siteUrl = 'https://peca-journal.example.com';
   const posts = await prisma.post.findMany({
@@ -16,7 +18,8 @@ export async function GET() {
     id: siteUrl,
     link: siteUrl,
     language: 'en',
-    favicon: `${siteUrl}/favicon.ico`
+    favicon: `${siteUrl}/favicon.ico`,
+    copyright: `${new Date().getFullYear()} Peca Journal`
   });
 
   posts.forEach((post) => {

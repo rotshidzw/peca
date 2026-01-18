@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 const NEWS_API_URL = 'https://newsapi.org/v2/everything';
 
 export async function GET() {
