@@ -17,6 +17,12 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+const demoAccounts = [
+  { label: 'Admin', email: 'admin@peca.dev', password: 'password123' },
+  { label: 'Editor', email: 'editor@peca.dev', password: 'password123' },
+  { label: 'Reader', email: 'reader@peca.dev', password: 'password123' }
+];
+
 export function SignInForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
@@ -24,6 +30,7 @@ export function SignInForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting }
   } = useForm<FormValues>({
     resolver: zodResolver(schema)
@@ -50,6 +57,29 @@ export function SignInForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-300">
+        <p className="font-medium text-slate-700 dark:text-slate-200">Demo access</p>
+        <p className="mt-1 text-slate-500 dark:text-slate-400">
+          Click a role to autofill credentials (password: <span className="font-semibold">password123</span>).
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {demoAccounts.map((account) => (
+            <Button
+              key={account.email}
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setError(null);
+                setValue('email', account.email, { shouldValidate: true });
+                setValue('password', account.password, { shouldValidate: true });
+              }}
+            >
+              {account.label}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div>
         <Input placeholder="you@example.com" type="email" {...register('email')} />
         {errors.email ? <p className="mt-1 text-xs text-rose-500">{errors.email.message}</p> : null}
