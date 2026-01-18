@@ -1,6 +1,5 @@
 'use client';
 
-import type { Route } from 'next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
@@ -17,7 +16,7 @@ const navigation = [
   { name: 'Tags', href: '/tag/expedition' },
   { name: 'Search', href: '/search' },
   { name: 'Contact', href: '/contact' }
-] satisfies Array<{ name: string; href: Route }>;
+];
 
 export function Navbar() {
   const pathname = usePathname();
@@ -34,7 +33,7 @@ export function Navbar() {
           {navigation.map((item) => (
             <Link
               key={item.href}
-              href={item.href}
+              href={{ pathname: item.href }}
               className={cn(
                 'text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100',
                 pathname === item.href && 'text-slate-900 dark:text-slate-100'
@@ -71,7 +70,7 @@ export function Navbar() {
             {navigation.map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={{ pathname: item.href }}
                 className={cn(
                   'text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100',
                   pathname === item.href && 'text-slate-900 dark:text-slate-100'

@@ -1,4 +1,3 @@
-import type { Route } from 'next';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 
@@ -22,7 +21,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     { href: '/dashboard/contacts', label: 'Contacts', show: hasRole(role, 'EDITOR') },
     { href: '/dashboard/comments', label: 'Comments', show: hasRole(role, 'EDITOR') },
     { href: '/dashboard/users', label: 'Users', show: hasRole(role, 'ADMIN') }
-  ] satisfies Array<{ href: Route; label: string; show: boolean }>;
+  ];
 
   return (
     <div className="container grid gap-8 py-12 lg:grid-cols-[240px_1fr]">
@@ -34,7 +33,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             .map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={{ pathname: item.href }}
                 className={cn(
                   'rounded-md px-3 py-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100'
                 )}
