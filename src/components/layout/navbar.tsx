@@ -1,5 +1,6 @@
 'use client';
 
+import type { Route } from 'next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
@@ -16,7 +17,7 @@ const navigation = [
   { name: 'Tags', href: '/tag/expedition' },
   { name: 'Search', href: '/search' },
   { name: 'Contact', href: '/contact' }
-];
+] satisfies Array<{ name: string; href: Route }>;
 
 export function Navbar() {
   const pathname = usePathname();
