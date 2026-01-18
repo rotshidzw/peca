@@ -16,7 +16,8 @@ export async function GET() {
     id: siteUrl,
     link: siteUrl,
     language: 'en',
-    favicon: `${siteUrl}/favicon.ico`
+    favicon: `${siteUrl}/favicon.ico`,
+    copyright: `${new Date().getFullYear()} Peca Journal`
   });
 
   posts.forEach((post) => {
