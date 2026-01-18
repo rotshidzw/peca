@@ -33,7 +33,7 @@ export function Navbar() {
           {navigation.map((item) => (
             <Link
               key={item.href}
-              href={item.href}
+              href={{ pathname: item.href }}
               className={cn(
                 'text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100',
                 pathname === item.href && 'text-slate-900 dark:text-slate-100'
@@ -70,7 +70,7 @@ export function Navbar() {
             {navigation.map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={{ pathname: item.href }}
                 className={cn(
                   'text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100',
                   pathname === item.href && 'text-slate-900 dark:text-slate-100'
