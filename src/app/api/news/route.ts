@@ -47,6 +47,10 @@ export async function GET() {
     }
   }
 
+  if (!process.env.DATABASE_URL) {
+    return NextResponse.json({ items: [] });
+  }
+
   const fallbackPosts = await prisma.post.findMany({
     where: { status: 'PUBLISHED' },
     orderBy: { publishedAt: 'desc' },

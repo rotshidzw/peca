@@ -1,6 +1,12 @@
 import { prisma } from '@/lib/prisma';
 
+const hasDatabaseUrl = Boolean(process.env.DATABASE_URL);
+
 export async function getHomeData() {
+  if (!hasDatabaseUrl) {
+    return { featuredPosts: [], latestPosts: [], categories: [] };
+  }
+
   const featuredPosts = await prisma.post.findMany({
     where: { status: 'PUBLISHED' },
     take: 3,
@@ -25,6 +31,10 @@ export async function getHomeData() {
 }
 
 export async function getTrendingPosts() {
+  if (!hasDatabaseUrl) {
+    return [];
+  }
+
   const weekAgo = new Date();
   weekAgo.setDate(weekAgo.getDate() - 7);
 
@@ -45,6 +55,10 @@ export async function getTrendingPosts() {
 }
 
 export async function getPostBySlug(slug: string) {
+  if (!hasDatabaseUrl) {
+    return null;
+  }
+
   return prisma.post.findUnique({
     where: { slug },
     include: {
@@ -57,6 +71,10 @@ export async function getPostBySlug(slug: string) {
 
 export async function getPostsByCategory(slug: string, page: number) {
   const pageSize = 6;
+  if (!hasDatabaseUrl) {
+    return { posts: [], total: 0, pageSize };
+  }
+
   const [posts, total] = await Promise.all([
     prisma.post.findMany({
       where: { category: { slug }, status: 'PUBLISHED' },
@@ -75,6 +93,10 @@ export async function getPostsByCategory(slug: string, page: number) {
 
 export async function getPostsByTag(slug: string, page: number) {
   const pageSize = 6;
+  if (!hasDatabaseUrl) {
+    return { posts: [], total: 0, pageSize };
+  }
+
   const [posts, total] = await Promise.all([
     prisma.post.findMany({
       where: { tags: { some: { tag: { slug } } }, status: 'PUBLISHED' },
@@ -92,6 +114,10 @@ export async function getPostsByTag(slug: string, page: number) {
 }
 
 export async function searchPosts(query: string) {
+  if (!hasDatabaseUrl) {
+    return [];
+  }
+
   return prisma.post.findMany({
     where: {
       status: 'PUBLISHED',
